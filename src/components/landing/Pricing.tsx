@@ -92,7 +92,11 @@ export function Pricing() {
                 )}
               >
                 {label}
-                {isAnnual && <span className="ml-1.5 text-xs text-amber-foreground">−18%</span>}
+                {isAnnual && (
+                  <span className={cn("ml-1.5 text-xs", annual ? "text-amber" : "text-amber-foreground")}>
+                    −18%
+                  </span>
+                )}
               </button>
             );
           })}
