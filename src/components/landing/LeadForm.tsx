@@ -29,8 +29,8 @@ export function LeadForm() {
     email: "",
     company: "",
     phone: "",
-    teamSize: teamSizes[1],
-    source: sources[0],
+    teamSize: teamSizes[1] as string,
+    source: sources[0] as string,
     notes: "",
   });
 
@@ -229,8 +229,7 @@ export function LeadForm() {
                   </label>
                   <motion.button
                     type="submit"
-                    whileHover={reduced ? undefined : { y: -2 }}
-                    whileTap={reduced ? undefined : { scale: 0.985 }}
+                    {...(reduced ? {} : { whileHover: { y: -2 }, whileTap: { scale: 0.985 } })}
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-amber)] px-5 py-3.5 text-sm font-semibold text-amber-foreground"
                   >
                     Create lead <ArrowRight className="h-4 w-4" />
