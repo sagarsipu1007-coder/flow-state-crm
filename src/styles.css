@@ -191,6 +191,24 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lenis takes over scrolling once loaded; native smooth would fight it. */
+html.lenis-active,
+html.lenis-active body {
+  scroll-behavior: auto;
+}
+
+html.lenis-active.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+html.lenis-active.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+html.lenis-active.lenis-stopped {
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
