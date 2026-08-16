@@ -3,6 +3,7 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { Problems } from "@/components/landing/Problems";
 import { Workflow } from "@/components/landing/Workflow";
+import { LeadForm } from "@/components/landing/LeadForm";
 import { Features } from "@/components/landing/Features";
 import { Automation } from "@/components/landing/Automation";
 import { Realtime } from "@/components/landing/Realtime";
@@ -40,6 +41,7 @@ function Index() {
         <Hero />
         <Problems />
         <Workflow />
+        <LeadForm />
         <Features />
         <Automation />
         <Realtime />

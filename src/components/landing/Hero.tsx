@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight, PlayCircle } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
 import { Reveal } from "./Reveal";
@@ -10,6 +12,15 @@ const timeline = [
 ];
 
 export function Hero() {
+  const reduced = useReducedMotion();
+  const shellRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: shellRef,
+    offset: ["start start", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -60]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 0.97]);
+
   return (
     <section id="top" className="relative overflow-hidden pt-32 pb-16 lg:pt-40">
       <div
@@ -49,8 +60,9 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={120} className="relative">
-          <img
+        <Reveal delay={120} className="relative" ref={shellRef}>
+          <motion.img
+            style={{ y, scale }}
             src={heroDashboard}
             alt="Northpeak deal pipeline with a live activity feed updating alongside it"
             width={1600}
