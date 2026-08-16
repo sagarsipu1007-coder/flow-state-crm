@@ -93,6 +93,11 @@ export function Navbar() {
           </a>
         </div>
       )}
-    </header>
+      <motion.div
+        aria-hidden
+        style={{ scaleX: progress }}
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-[image:var(--gradient-amber)]"
+      />
+    </motion.header>
   );
 }
