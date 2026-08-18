@@ -47,7 +47,7 @@ export function AuthModal() {
     setBusy(true);
     window.setTimeout(() => {
       setBusy(false);
-      signIn({ name: isSignup ? name.trim() : email.split("@")[0], email });
+      signIn({ name: isSignup ? name.trim() : (email.split("@")[0] ?? "there"), email });
       toast.success(isSignup ? "Workspace created — you're in." : "Signed in to Northpeak.");
       setName("");
       setPassword("");

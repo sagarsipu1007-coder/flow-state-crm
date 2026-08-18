@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Mountain } from "lucide-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 const links = [
   { label: "Product", href: "#features" },
@@ -13,6 +14,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { user, openAuth, signOut } = useAuth();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, restDelta: 0.001 });
 
@@ -53,13 +55,35 @@ export function Navbar() {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => openAuth("signup")}
+                className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              >
+                Create account
+              </button>
+            </li>
           </ul>
-          <a
-            href="/signup"
-            className="hidden rounded-xl bg-[image:var(--gradient-amber)] px-4 py-2.5 text-sm font-semibold text-amber-foreground shadow-[var(--shadow-card)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
-          >
-            Start free trial
-          </a>
+          {user ? (
+            <div className="hidden items-center gap-2 sm:flex">
+              <span className="max-w-[9rem] truncate rounded-xl border border-border px-3 py-2 text-sm font-medium">
+                {user.name}
+              </span>
+              <button
+                onClick={signOut}
+                className="rounded-xl bg-[image:var(--gradient-amber)] px-4 py-2.5 text-sm font-semibold text-amber-foreground shadow-[var(--shadow-card)] transition-transform hover:-translate-y-0.5"
+              >
+                Log out
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => openAuth("signin")}
+              className="hidden rounded-xl bg-[image:var(--gradient-amber)] px-4 py-2.5 text-sm font-semibold text-amber-foreground shadow-[var(--shadow-card)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
+            >
+              Sign in
+            </button>
+          )}
           <button
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
@@ -85,12 +109,24 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <a
-            href="/signup"
-            className="mt-2 block rounded-xl bg-[image:var(--gradient-amber)] px-4 py-3 text-center text-sm font-semibold text-amber-foreground"
+          <button
+            onClick={() => {
+              setOpen(false);
+              openAuth("signup");
+            }}
+            className="mt-1 block w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium text-muted-foreground"
           >
-            Start free trial
-          </a>
+            Create account
+          </button>
+          <button
+            onClick={() => {
+              setOpen(false);
+              user ? signOut() : openAuth("signin");
+            }}
+            className="mt-2 block w-full rounded-xl bg-[image:var(--gradient-amber)] px-4 py-3 text-center text-sm font-semibold text-amber-foreground"
+          >
+            {user ? "Log out" : "Sign in"}
+          </button>
         </div>
       )}
       <motion.div
